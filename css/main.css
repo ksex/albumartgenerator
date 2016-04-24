@@ -1,1 +1,21 @@
-font-family: 'Libre Baskerville', serif;
+#controls {
+	width: 300px;
+	margin-top: 40px;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	line-height: 18px;
+}
+
+#controls label, input {
+	display: inline-block;
+	padding: 5px;
+}
+
+#main-canvas {
+	position: absolute;
+	left: 360px;
+	top: 40px;
+	width: 725px;
+	height: 725px;
+	overflow: hidden;
+}

@@ -13,11 +13,26 @@
 
     </head>
     <body>
-        <label>Upload image:</label>
-        <input type="file" id="imageUpload" name="imageUpload"/>
+        <section id="controls">
+            <label for="imageUpload">Upload image:</label>
+            <input type="file" id="imageUpload" name="imageUpload"/>
+            <form id="album-text" name="album-text">
+                <label for="albumTitle">Album artist:
+                    <input type="text" id="albumArtist" name="albumArtist"/>
+                </label>            
+                <label for="albumTitle">Album subtitle:
+                    <input type="text" id="albumSubtitle" name="albumSubtitle"/>
+                </label>
+                <label for="albumTitle">Album title:
+                    <input type="text" id="albumTitle" name="albumTitle"/>
+                </label>
+                <a href="#" id="submit-text" name="submit-text">Submit</a>
+            </form>
+        </section>
         <canvas id="main-canvas"></canvas>
 
         <script src="js/lib/underscore.min.js"></script>
+        <script src="js/lib/color-thief.js"></script>
         <script src="js/main.js"></script>
         
     </body>
