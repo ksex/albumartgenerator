@@ -14,9 +14,14 @@
     </head>
     <body>
         <section id="controls">
-            <label>Upload an image, and then select one of the palettes to render the album info.</label>
+            <h2>Make your own album art.</h2>
+            <label>Upload an image, and then select one of the palettes to render the album info.  This works best with a squareish photo.</label>
+            <label>Once you're done, right click to save.</label>
             <label for="imageUpload">Upload image:</label>
             <input type="file" id="imageUpload" name="imageUpload"/>
+            <label>Options for text colors</label>
+            <div id="palette-options">
+            </div>
             <form id="album-text" name="album-text">
                 <label for="albumTitle">Album artist:
                     <input type="text" id="albumArtist" name="albumArtist"/>
@@ -27,17 +32,20 @@
                 <label for="albumTitle">Album title:
                     <input type="text" id="albumTitle" name="albumTitle"/>
                 </label>
+                <label for="sideA">Side A Track listing:
+                    <textarea id="sideA" name="sideA"></textarea>
+                </label>
+                <label for="sideB">Side B Track listing:
+                    <textarea id="sideB" name="sideB"></textarea>
+                </label>
                 <a href="#" id="submit-text" name="submit-text">Submit</a>
             </form>
-            <label>Options for text colors</label>
-            <div id="palette-options">
-            </div>
         </section>
         <canvas id="main-canvas"></canvas>
 
         <script src="js/lib/underscore.min.js"></script>
         <script src="js/lib/color-thief.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/aag.js"></script>
         
     </body>
 </html>
