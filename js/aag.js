@@ -6,10 +6,15 @@ var albumArtGenerator = {
     imageLoader: document.getElementById('imageUpload'),
     ctx: document.getElementById('main-canvas').getContext('2d'),
 
-    albumTitle: document.getElementById('albumTitle'),
-    albumArtist: document.getElementById('albumArtist'), 
-    albumSubtitle: document.getElementById('albumSubtitle'),
+    textFields: {
+      albumTitle: document.getElementById('albumTitle'),
+      albumArtist: document.getElementById('albumArtist'), 
+      albumSubtitle: document.getElementById('albumSubtitle'),
+      sideA: document.getElementById('sideA'),
+      sideB: document.getElementById('sideB')
+    },
     albumInfoSubmit: document.getElementById('submit-text'),
+
     palette: document.getElementById('palette-options'),
 
     selectedColor: null,
@@ -24,11 +29,12 @@ var albumArtGenerator = {
         height: 725
     },
     fontDefaults: {textAlign: "end", maxWidth: 455},
-    albumArtistSettings: {font: "bold 52px Libre Baskerville", offset1: "685", offset2: "60"}, 
-    albumSubtitleSettings: {font: "400 18px Libre Baskerville", offset1: "685", offset2: "90"},
-    albumTitleSettings: {font: "200 italic 36px Libre Baskerville", offset1: "685", offset2: "140"},
-    trackListingSettings: {font: "400 18px Libre Baskerville", offset1: "685", offset2: "160", offset3: "180", offset4: "200", offset5: "220"},
-
+    fontSettings: {
+      albumArtist: {font: "bold 52px Libre Baskerville", offset1: "685", offset2: "60"},
+      albumSubtitle: {font: "400 18px Libre Baskerville", offset1: "685", offset2: "90"},
+      albumTitle:  {font: "200 italic 36px Libre Baskerville", offset1: "685", offset2: "140"},
+      trackListing: {font: "400 18px Libre Baskerville", offset1: "685", offset2: "160", offset3: "180", offset4: "200", offset5: "220"}
+    },
 
     init: function() {
 
@@ -51,11 +57,22 @@ var albumArtGenerator = {
         /* Draws text on click of "submit"
          * element
          */ 
-        e.preventDefault();
-        self.drawText(albumArtist.value, self.albumArtistSettings);
-        self.drawText(albumSubtitle.value, self.albumSubtitleSettings);
-        self.drawText(albumTitle.value, self.albumTitleSettings);
-        self.drawTrackListing(sideA.value, sideB.value, self.trackListingSettings);
+         var sideA;
+         var sideB;
+         _.each(self.textFields, function(field) {
+          if (!_.isEmpty(field.value)){
+            if (field.name !== 'sideA' && field.name !== 'sideB') {
+              self.drawText(field.value, self.fontSettings[field.name]);  
+            } else {
+              if (field.name == 'sideA') { sideA = field.value; }
+              if (field.name == 'sideB') { sideB = field.value; }
+            }                      
+          }
+        });
+
+        if (!_.isEmpty(sideA) || !_.isEmpty(sideB)) {
+          self.drawTrackListing(sideA, sideB, self.fontSettings.trackListing);
+        }
     },
 
     handleImage: function(e) {
@@ -160,22 +177,28 @@ var albumArtGenerator = {
         * splitting each set into two
         * mostly even lines
         */ 
-        sideAStrings = self.splitStrings(sideA);
-        sideBStrings = self.splitStrings(sideB);
-
-        sideALine1 = 'Side A: ' + sideAStrings.stringOne;
-        sideALine2 = sideAStrings.stringTwo;
-
-        sideBLine1 = 'Side B: ' + sideBStrings.stringOne;
-        sideBLine2 = sideBStrings.stringTwo;
 
         self.ctx.font = typeSettings.font;
         self.ctx.textAlign = self.fontDefaults.textAlign;
         self.ctx.fillStyle = self.selectedColor || self.getRgbString();
-        self.ctx.fillText(sideALine1, typeSettings.offset1, typeSettings.offset2);     
-        self.ctx.fillText(sideALine2, typeSettings.offset1, typeSettings.offset3);     
-        self.ctx.fillText(sideBLine1, typeSettings.offset1, typeSettings.offset4);     
-        self.ctx.fillText(sideBLine2, typeSettings.offset1, typeSettings.offset5);     
+
+        if (!_.isEmpty(sideA)) {
+          sideAStrings = self.splitStrings(sideA);
+          sideALine1 = 'Side A: ' + sideAStrings.stringOne;
+          sideALine2 = sideAStrings.stringTwo;
+          self.ctx.fillText(sideALine1, typeSettings.offset1, typeSettings.offset2);     
+          self.ctx.fillText(sideALine2, typeSettings.offset1, typeSettings.offset3);  
+        }
+
+        if (!_.isEmpty(sideB)) {
+          sideBStrings = self.splitStrings(sideB);
+
+          sideBLine1 = 'Side B: ' + sideBStrings.stringOne;
+          sideBLine2 = sideBStrings.stringTwo;
+
+          self.ctx.fillText(sideBLine1, typeSettings.offset1, typeSettings.offset4);     
+          self.ctx.fillText(sideBLine2, typeSettings.offset1, typeSettings.offset5);  
+        }
  
     },
 
