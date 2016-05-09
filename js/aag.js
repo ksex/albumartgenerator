@@ -1,3 +1,10 @@
+/* Generates a savable album art styled image based on a user
+ * upload photo.
+ * Leveraging mostly canvas. 
+ *
+ * @author Katie Sexton github.com/ksex
+ */ 
+
 var albumArtGenerator = {
  
     /* Dom elements
